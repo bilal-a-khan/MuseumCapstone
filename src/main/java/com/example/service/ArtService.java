@@ -13,5 +13,9 @@ public interface ArtService {
 
     List<Sculpture> findAllSculptures();
 
-    Art findById(long id);
+    Art findById(Long id);
+
+    List<Sculpture> findAllSculpturesByArtistAndMuseum(Long artistId, Long museumId);
+
+    Sculpture findFirstSculptureByArtist(Long artistId);
 }

@@ -20,11 +20,6 @@ public class ArtServiceImpl implements ArtService {
 
     private ArtRepository artRepository;
 
-    @Autowired
-    public void setArtRepository(ArtRepository artRepository) {
-        this.artRepository = artRepository;
-    }
-
     @Override
     public List<Art> findAll() {
         List<Art> arts = new ArrayList<>();
@@ -44,9 +39,20 @@ public class ArtServiceImpl implements ArtService {
     }
 
     @Override
-    public Art findById(long id) {
+    public Art findById(Long id) {
         Optional<Art> art = artRepository.findById(id);
         return art.orElseThrow();
+    }
+
+    @Override
+    public List<Sculpture> findAllSculpturesByArtistAndMuseum(Long artistId, Long museumId) {
+        return artRepository.findAllSculpturesByArtistAndMuseum(artistId, museumId);
+
+    }
+
+    @Override
+    public Sculpture findFirstSculptureByArtist(Long artistId) {
+        return artRepository.findFirstSculptureByArtist(artistId);
     }
 
 }

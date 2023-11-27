@@ -15,7 +15,7 @@ public abstract class Art {
     private String name;
 
     @ManyToOne
-    @JsonBackReference
+    @JsonBackReference(value = "art-artist")
     private Artist artist;
 
     @Enumerated(value = EnumType.STRING)

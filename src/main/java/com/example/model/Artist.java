@@ -1,9 +1,13 @@
 package com.example.model;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.DiscriminatorValue;
 import jakarta.persistence.Entity;
+import jakarta.persistence.OneToMany;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import java.util.List;
 
 @Data
 @NoArgsConstructor
@@ -17,5 +21,8 @@ public class Artist extends Person{
         this.yearDead = yearDead;
     }
 
+    @OneToMany(mappedBy = "artist")
+    @JsonManagedReference
+    private List<Art> artList;
 
 }

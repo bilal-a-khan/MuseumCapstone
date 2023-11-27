@@ -26,6 +26,8 @@ public class ArtistController {
     public List<Artist> getAllArtists(){
         List<Artist> people = Collections.emptyList();
         people = artistService.findAll();
+
+        // Rank the artists by number of paintings hanging in museums
         people.sort(Comparator.comparing(Artist::getName));
         return people;
     }

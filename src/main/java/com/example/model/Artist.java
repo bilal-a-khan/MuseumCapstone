@@ -29,4 +29,8 @@ public class Artist extends Person{
     @JsonManagedReference(value = "art-artist")
     private List<Art> artList;
 
+    public int getArtCount(){
+        return this.artList.size();
+    }
+
 }

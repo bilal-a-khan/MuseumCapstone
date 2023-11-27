@@ -10,7 +10,7 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
-//@Repository
+@Repository
 public interface ArtRepository extends CrudRepository<Art, Long> {
 //    @Query("SELECT a FROM Art a WHERE a.artist_id = :id")
 //    List<Art> findArtByArtistId(@Param("id") int id);

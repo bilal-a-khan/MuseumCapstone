@@ -5,9 +5,9 @@ import jakarta.persistence.Entity;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
-//@EqualsAndHashCode(callSuper = true)
-//@Entity
-//@Data
-//@DiscriminatorValue("Sculpture")
+@EqualsAndHashCode(callSuper = true)
+@Entity
+@Data
+@DiscriminatorValue("Sculpture")
 public class Sculpture extends Art {
 }

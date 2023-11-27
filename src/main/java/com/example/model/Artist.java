@@ -16,13 +16,17 @@ public class Artist extends Person{
 
     private int yearDead;
 
+    public Artist(String name){
+        this.setName(name);
+    }
+
     public Artist(String name, int yearBorn, int yearDead){
         super(name, yearBorn);
         this.yearDead = yearDead;
     }
 
     @OneToMany(mappedBy = "artist")
-    @JsonManagedReference
+    @JsonManagedReference(value = "art-artist")
     private List<Art> artList;
 
 }

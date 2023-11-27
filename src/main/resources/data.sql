@@ -1,0 +1,2 @@
+INSERT INTO artist (id, name, year_born, year_dead) VALUES (NEXTVAL ('artist_seq'), 'Leonardo da Vinci', 1452, 1519);
+INSERT INTO artist (id, name, year_born, year_dead) VALUES (NEXTVAL ('artist_seq'), 'Michelangelo', 1457, 1564);

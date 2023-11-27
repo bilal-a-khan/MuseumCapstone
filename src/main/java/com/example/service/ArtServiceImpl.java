@@ -46,13 +46,15 @@ public class ArtServiceImpl implements ArtService {
 
     @Override
     public List<Sculpture> findAllSculpturesByArtistAndMuseum(Long artistId, Long museumId) {
-        return artRepository.findAllSculpturesByArtistAndMuseum(artistId, museumId);
+        //return artRepository.findAllSculpturesByArtistAndMuseum(artistId, museumId);
+        return null;
 
     }
 
     @Override
     public Sculpture findFirstSculptureByArtist(Long artistId) {
-        return artRepository.findFirstSculptureByArtist(artistId);
+        //return artRepository.findFirstSculptureByArtist(artistId);
+        return null;
     }
 
 }

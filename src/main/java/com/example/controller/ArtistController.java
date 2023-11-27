@@ -3,12 +3,14 @@ package com.example.controller;
 
 import com.example.model.Artist;
 import com.example.service.ArtistService;
+import com.fasterxml.jackson.databind.deser.CreatorProperty;
+import jakarta.websocket.server.PathParam;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 @Slf4j
@@ -23,14 +25,39 @@ public class ArtistController {
     }
 
     @GetMapping("/artists")
-    public List<Artist> getAllPeople(){
-        log.debug("Getting all artists from DB...");
-        List<Artist> people = Collections.emptyList();
+    public List<Artist> getAllArtists(){
+        List<Artist> artists = Collections.emptyList();
+        artists = artistService.findAll();
 
-        people = artistService.findAll();
-        return people;
+        // Rank the artists by number of paintings hanging in museums
+        artists.sort(Comparator.comparing((artist) -> artist.getArtList().size()));
+        return artists;
     }
 
+    @GetMapping("/artist/{id}")
+    public Artist getMessage(@PathVariable Long id){
+        return artistService.findById(id);
+    }
 
+    @GetMapping("/artist/search")
+    public List<Artist> searchByName(@PathParam("name") String name){
+        return artistService.searchByName(name);
+    }
+
+    @PostMapping("/artist")
+    public Artist createArtist(@RequestBody Artist artist){
+        return artistService.save(artist);
+    }
+
+    @PutMapping("/artist")
+    public Artist updateArtist(@RequestBody Artist artist){
+        return artistService.save(artist);
+    }
+
+    @PutMapping("/artist/{id}")
+    public void createArtist(@PathVariable Long id){
+        artistService.deleteById(id);
+        log.debug("Artist object with id = " + id + " has been deleted.");
+    }
 
 }

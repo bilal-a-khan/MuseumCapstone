@@ -1,4 +1,4 @@
-//package com.example.utils;
+package com.example.utils;
 //
 //import com.example.model.*;
 //import com.example.repository.ArtRepository;
@@ -10,7 +10,7 @@
 //import java.awt.*;
 //
 //@Component@AllArgsConstructor
-//public class Populator {
+public class Populator {
 //
 //    private ArtistRepository artistRepository;
 //    private MuseumRepository museumRepository;
@@ -56,4 +56,4 @@
 //
 //
 //    }
-//}
+}

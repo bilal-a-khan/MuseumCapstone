@@ -8,4 +8,6 @@ public interface MuseumService {
     List<Museum> findAll();
 
     Museum findById(Long id);
+
+    Museum findByMostArt();
 }

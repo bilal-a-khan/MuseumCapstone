@@ -9,6 +9,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 
@@ -31,5 +32,13 @@ public class MuseumServiceImpl implements MuseumService {
     public Museum findById(Long id) {
         Optional<Museum> museum = museumRepository.findById(id);
         return museum.orElseThrow();
+    }
+
+    @Override
+    public Museum findByMostArt() {
+        List<Museum> museums = findAll();
+        Optional<Museum> largestMuseum = museums.stream().max(Comparator.comparingInt(museum -> museum.getArtList().size()));
+        return largestMuseum.orElse(null);
+
     }
 }

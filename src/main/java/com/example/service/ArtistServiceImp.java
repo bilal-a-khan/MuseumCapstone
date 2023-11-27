@@ -34,7 +34,11 @@ public class ArtistServiceImp implements ArtistService{
         return artistOptional.orElseGet(
                 () -> new Artist("DEFAULT ARTIST: Artist with id = " + id + " NOT found.")
         );
+    }
 
+    @Override
+    public List<Artist> searchByName(String name) {
+        return artistRepository.searchByName(name);
     }
 
     @Override
@@ -45,6 +49,5 @@ public class ArtistServiceImp implements ArtistService{
     @Override
     public void deleteById(Long id) {
         this.artistRepository.deleteById(id);
-
     }
 }

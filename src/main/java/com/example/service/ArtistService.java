@@ -10,6 +10,8 @@ public interface ArtistService {
 
     List<Artist> findAll();
     Artist findById(Long id);
+    List<Artist> searchByName(String name);
+
     Artist save(Artist artist);
     void deleteById(Long id);
 }

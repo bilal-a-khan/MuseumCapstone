@@ -3,6 +3,8 @@ package com.example.controller;
 
 import com.example.model.Artist;
 import com.example.service.ArtistService;
+import com.fasterxml.jackson.databind.deser.CreatorProperty;
+import jakarta.websocket.server.PathParam;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -24,17 +26,22 @@ public class ArtistController {
 
     @GetMapping("/artists")
     public List<Artist> getAllArtists(){
-        List<Artist> people = Collections.emptyList();
-        people = artistService.findAll();
+        List<Artist> artists = Collections.emptyList();
+        artists = artistService.findAll();
 
         // Rank the artists by number of paintings hanging in museums
-        people.sort(Comparator.comparing(Artist::getName));
-        return people;
+        artists.sort(Comparator.comparing((artist) -> artist.getArtList().size()));
+        return artists;
     }
 
     @GetMapping("/artist/{id}")
     public Artist getMessage(@PathVariable Long id){
         return artistService.findById(id);
+    }
+
+    @GetMapping("/artist/search")
+    public List<Artist> searchByName(@PathParam("name") String name){
+        return artistService.searchByName(name);
     }
 
     @PostMapping("/artist")

@@ -1,4 +1,11 @@
 package com.example.model;
 
-public class Sculpture {
+import jakarta.persistence.DiscriminatorValue;
+import jakarta.persistence.Entity;
+import lombok.Data;
+
+@Entity
+@Data
+@DiscriminatorValue("Sculpture")
+public class Sculpture extends Art {
 }

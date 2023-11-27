@@ -20,9 +20,11 @@ public abstract class Art {
 
     @Enumerated(value = EnumType.STRING)
     private Medium medium;
-//    @ManyToOne
-//    @JsonBackReference
-    //private Museum museum;
+
+    @ManyToOne
+    @JsonBackReference
+    private Museum museum;
+
     private int yearCompleted;
     private String backStory;
 }

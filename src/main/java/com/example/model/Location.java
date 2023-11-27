@@ -7,18 +7,19 @@ import jakarta.persistence.OneToOne;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-@Data
-@NoArgsConstructor
-@Entity
+//@Data
+//@NoArgsConstructor
+//@Entity
 public class Location {
+//
+//    @Id
+//    @GeneratedValue
+//    private Integer id;
+//
+//    private String city;
+//    private String country;
+//
+//    @OneToOne(mappedBy = "location")
+//    private Museum museum;
 
-    @Id
-    @GeneratedValue
-    private Integer id;
-
-    private String city;
-    private String country;
-
-    @OneToOne(mappedBy = "location")
-    private Museum museum;
 }

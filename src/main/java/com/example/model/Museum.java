@@ -7,21 +7,21 @@ import lombok.NoArgsConstructor;
 import java.util.List;
 import java.util.Locale;
 
-@Data
-@NoArgsConstructor
-@Entity
+//@Data
+//@NoArgsConstructor
+//@Entity
 public class Museum {
-
-    @Id@GeneratedValue
-    Integer id;
-
-    private String name;
-
-    private Person curator;
-
-    private List<Art> artList;
-
-    @OneToOne(cascade = CascadeType.ALL)
-    private Location location;
+//
+//    @Id@GeneratedValue
+//    Integer id;
+//
+//    private String name;
+//
+//    private Person curator;
+//
+//    private List<Art> artList;
+//
+//    @OneToOne(cascade = CascadeType.ALL)
+//    private Location location;
 
 }

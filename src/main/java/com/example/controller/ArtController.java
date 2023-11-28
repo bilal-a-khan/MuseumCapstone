@@ -1,6 +1,7 @@
 package com.example.controller;
 
 import com.example.model.Art;
+import com.example.model.Location;
 import com.example.model.Painting;
 import com.example.model.Sculpture;
 import com.example.service.ArtService;
@@ -58,6 +59,17 @@ public class ArtController {
     public Sculpture findFirstSculptureByArtist(@PathVariable Long id) {
         log.debug("Fetching first sculpture by artist with id" + id);
         return artService.findFirstSculptureByArtist(id);
+    }
+
+    @GetMapping("/location")
+    public List<Location> findLocationByName(@PathParam("name") String name){
+        List<Art> artList = artService.searchByName(name);
+        List<Location> locations = new ArrayList<>();
+
+        artList.forEach( (art) -> {
+            locations.add(art.getMuseum().getLocation());
+        });
+        return locations;
     }
 
 }

@@ -1,6 +1,7 @@
 package com.example.service;
 
 import com.example.model.Art;
+import com.example.model.Artist;
 import com.example.model.Painting;
 import com.example.model.Sculpture;
 
@@ -18,4 +19,6 @@ public interface ArtService {
     List<Sculpture> findAllSculpturesByArtistAndMuseum(Long artistId, Long museumId);
 
     Sculpture findFirstSculptureByArtist(Long artistId);
+
+    List<Art> searchByName(String name);
 }

@@ -57,4 +57,9 @@ public class ArtServiceImpl implements ArtService {
         return null;
     }
 
+    @Override
+    public List<Art> searchByName(String name) {
+        return artRepository.searchByName(name);
+    }
+
 }

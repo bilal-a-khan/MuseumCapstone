@@ -1,6 +1,7 @@
 package com.example.controller;
 
 
+import com.example.model.Art;
 import com.example.model.Artist;
 import com.example.service.ArtistService;
 import com.fasterxml.jackson.databind.deser.CreatorProperty;
@@ -30,9 +31,18 @@ public class ArtistController {
         artists = artistService.findAll();
 
         // Rank the artists by number of paintings hanging in museums
-        artists.sort(Comparator.comparing((artist) -> artist.getArtList().size()));
+        // artists.sort(Comparator.comparing((artist) -> artist.getArtList().size()));
+
+        artists.sort(Comparator.comparing(Artist::getName));
         return artists;
     }
+
+//    @GetMapping("/sortedartists")
+//    public List<Artist> getSortedArtists(){
+//        List<Artist> artists = Collections.emptyList();
+//        artists = artistService.findSortedAll();
+//        return artists;
+//    }
 
     @GetMapping("/artist/{id}")
     public Artist getMessage(@PathVariable Long id){

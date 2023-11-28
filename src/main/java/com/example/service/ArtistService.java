@@ -1,5 +1,6 @@
 package com.example.service;
 
+import com.example.model.Art;
 import com.example.model.Artist;
 import org.springframework.stereotype.Service;
 
@@ -14,4 +15,7 @@ public interface ArtistService {
 
     Artist save(Artist artist);
     void deleteById(Long id);
+
+
+//    List<Artist> findSortedAll();
 }

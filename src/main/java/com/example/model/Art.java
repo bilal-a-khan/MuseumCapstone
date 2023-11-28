@@ -14,7 +14,7 @@ public abstract class Art {
     private Long id;
     private String name;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JsonBackReference(value = "art-artist")
     private Artist artist;
 

@@ -84,7 +84,7 @@ public class ArtController {
         return artService.save(sculpture);
     }
 
-    @DeleteMapping("/artist/{id}")
+    @DeleteMapping("/art/{id}")
     public void deleteArt(@PathVariable Long id){
         artService.deleteById(id);
         log.debug("Artist object with id = " + id + " has been deleted.");

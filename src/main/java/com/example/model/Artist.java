@@ -1,6 +1,8 @@
 package com.example.model;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import jakarta.persistence.DiscriminatorValue;
 import jakarta.persistence.Entity;
 import jakarta.persistence.OneToMany;
@@ -12,21 +14,24 @@ import java.util.List;
 @Data
 @NoArgsConstructor
 @Entity
-public class Artist extends Person{
+@JsonIdentityInfo(
+        generator = ObjectIdGenerators.PropertyGenerator.class,
+        property = "id")
+public class Artist extends Person {
 
     private int yearDead;
 
-    public Artist(String name){
+    public Artist(String name) {
         this.setName(name);
     }
 
-    public Artist(String name, int yearBorn, int yearDead){
+    public Artist(String name, int yearBorn, int yearDead) {
         super(name, yearBorn);
         this.yearDead = yearDead;
     }
 
     @OneToMany(mappedBy = "artist")
-    @JsonManagedReference(value = "art-artist")
+   // @JsonManagedReference(value = "art-artist")
     private List<Art> artList;
 
 //    public int getArtCount(){

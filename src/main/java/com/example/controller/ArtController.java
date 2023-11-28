@@ -5,13 +5,11 @@ import com.example.model.Location;
 import com.example.model.Painting;
 import com.example.model.Sculpture;
 import com.example.service.ArtService;
-import io.micrometer.common.util.StringUtils;
 import jakarta.websocket.server.PathParam;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.ArrayList;

@@ -18,4 +18,6 @@ public interface ArtService {
     List<Sculpture> findAllSculpturesByArtistAndMuseum(Long artistId, Long museumId);
 
     Sculpture findFirstSculptureByArtist(Long artistId);
+
+    Sculpture findLastSculptureByArtist(Long artistId);
 }

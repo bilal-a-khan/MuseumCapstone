@@ -36,16 +36,9 @@ public class ArtController {
     }
 
     @GetMapping("/sculpture")
-    public List<Sculpture> findAllSculptures(@PathParam("museum") Long museumId, @PathParam("artist") Long artistId) {
-        List<Sculpture> sculptures;
-        log.debug("Fetching all sculptures");
-        if (StringUtils.isNotBlank(String.valueOf(museumId)) &&
-                StringUtils.isNotBlank(String.valueOf(artistId))){
-            sculptures = artService.findAllSculpturesByArtistAndMuseum(artistId, museumId);
-        } else {
-            sculptures = artService.findAllSculptures();
-        }
-        return sculptures;
+    public List<Sculpture> findAllSculptures() {
+        log.debug("Find all sculptures called");
+        return artService.findAllSculptures();
     }
 
     @GetMapping("/art/{id}")
@@ -58,6 +51,17 @@ public class ArtController {
     public Sculpture findFirstSculptureByArtist(@PathVariable Long id) {
         log.debug("Fetching first sculpture by artist with id" + id);
         return artService.findFirstSculptureByArtist(id);
+    }
+
+    @GetMapping("/sculpture/last/{id}")
+    public Sculpture findLastSculptureByArtist(@PathVariable Long id) {
+        log.debug("Fetching last sculpture by artist with id" + id);
+        return artService.findLastSculptureByArtist(id);
+    }
+
+    @GetMapping("/sculpture/{id1}/{id2}")
+    public List<Sculpture> findSculptureByMuseumAndArtist(@PathVariable Long id1, @PathVariable Long id2){
+        return artService.findAllSculpturesByArtistAndMuseum(id1,id2);
     }
 
 }

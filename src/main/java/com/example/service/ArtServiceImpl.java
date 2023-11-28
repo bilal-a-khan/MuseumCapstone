@@ -1,8 +1,6 @@
 package com.example.service;
 
-import com.example.model.Art;
-import com.example.model.Painting;
-import com.example.model.Sculpture;
+import com.example.model.*;
 import com.example.repository.ArtRepository;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -46,18 +44,28 @@ public class ArtServiceImpl implements ArtService {
 
     @Override
     public List<Sculpture> findAllSculpturesByArtistAndMuseum(Long artistId, Long museumId) {
-        return artRepository.findAllSculpturesByArtistAndMuseum(artistId, museumId);
+        Artist artist = new Artist();
+        artist.setId(artistId);
+        Museum museum = new Museum();
+        museum.setId(museumId);
+        return artRepository.findAllSculpturesByArtistAndMuseum(artist, museum);
 
     }
 
     @Override
     public Sculpture findFirstSculptureByArtist(Long artistId) {
-        return artRepository.findFirstSculptureByArtist(artistId);
+        Artist artist = new Artist();
+        artist.setId(artistId);
+        List<Sculpture> sculptures = artRepository.findFirstSculptureByArtist(artist);
+        return sculptures.get(0) ;
     }
 
     @Override
     public Sculpture findLastSculptureByArtist(Long artistId) {
-        return artRepository.findLastSculptureByArtist(artistId);
+        Artist artist = new Artist();
+        artist.setId(artistId);
+        List<Sculpture> sculptures = artRepository.findLastSculptureByArtist(artist);
+        return sculptures.get(0);
     }
 
     @Override

@@ -1,9 +1,6 @@
 package com.example.repository;
 
-import com.example.model.Art;
-import com.example.model.Artist;
-import com.example.model.Painting;
-import com.example.model.Sculpture;
+import com.example.model.*;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
@@ -23,15 +20,15 @@ public interface ArtRepository extends CrudRepository<Art, Long> {
     List<Sculpture> findAllSculptures();
 
     //List all the sculptures by a given artist in a given museum
-    @Query(value = "SELECT * FROM Art s WHERE s.artist_id = :artist_id AND s.museum_id = :museum_id AND s.art_type='Sculpture'", nativeQuery = true)
-    List<Sculpture> findAllSculpturesByArtistAndMuseum(@Param("artist_id") Long artistId, @Param("museum_id") Long museumId);
+    @Query("SELECT s FROM Sculpture s WHERE s.artist = :artist AND s.museum = :museum")
+    List<Sculpture> findAllSculpturesByArtistAndMuseum(@Param("artist") Artist artist, @Param("museum") Museum museum);
 //
 //    //First or last sculpture made by a given artist.
-    @Query(value = "SELECT * FROM Art s WHERE s.artist_id = :artist_id AND s.art_type='Sculpture' ORDER BY s.year_completed ASC LIMIT 1", nativeQuery = true)
-    Sculpture findFirstSculptureByArtist(@Param("artist_id") Long artistId);
+    @Query("SELECT s FROM Sculpture s WHERE s.artist = :artist ORDER BY s.yearCompleted ASC")
+    List<Sculpture> findFirstSculptureByArtist(@Param("artist") Artist artist);
 
-    @Query(value = "SELECT * FROM Art s WHERE s.artist_id = :artist_id AND s.art_type='Sculpture' ORDER BY s.year_completed DESC LIMIT 1", nativeQuery = true)
-    Sculpture findLastSculptureByArtist(@Param("artist_id") Long artistId);
+    @Query("SELECT s FROM Sculpture s WHERE s.artist = :artist ORDER BY s.yearCompleted DESC")
+    List<Sculpture> findLastSculptureByArtist(@Param("artist") Artist artist);
 
     @Query("SELECT a FROM Art a WHERE a.name LIKE %:name%")
     List<Art> searchByName(@Param("name") String name);

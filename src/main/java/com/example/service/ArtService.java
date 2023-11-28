@@ -25,4 +25,6 @@ public interface ArtService {
 
     Painting save(Painting painting);
     Sculpture save(Sculpture sculpture);
+
+    void deleteById(Long id);
 }

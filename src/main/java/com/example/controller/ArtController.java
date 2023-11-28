@@ -75,4 +75,21 @@ public class ArtController {
         return artService.save(sculpture);
     }
 
+    @PutMapping ("/painting")
+    public Painting updatingArt(@RequestBody Painting painting){
+        return artService.save(painting);
+    }
+    @PutMapping("/sculpture")
+    public Sculpture updatingArt(@RequestBody Sculpture sculpture){
+        return artService.save(sculpture);
+    }
+
+    @DeleteMapping("/artist/{id}")
+    public void deleteArt(@PathVariable Long id){
+        artService.deleteById(id);
+        log.debug("Artist object with id = " + id + " has been deleted.");
+    }
+
+
+
 }

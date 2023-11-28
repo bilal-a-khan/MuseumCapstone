@@ -72,4 +72,9 @@ public class ArtServiceImpl implements ArtService {
         return artRepository.save(sculpture);
     }
 
+    @Override
+    public void deleteById(Long id) {
+        artRepository.deleteById(id);
+    }
+
 }

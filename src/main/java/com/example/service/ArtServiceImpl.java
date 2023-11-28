@@ -60,4 +60,9 @@ public class ArtServiceImpl implements ArtService {
         return artRepository.findLastSculptureByArtist(artistId);
     }
 
+    @Override
+    public List<Art> searchByName(String name) {
+        return artRepository.searchByName(name);
+    }
+
 }

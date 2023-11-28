@@ -1,6 +1,7 @@
 package com.example.repository;
 
 import com.example.model.Art;
+import com.example.model.Artist;
 import com.example.model.Painting;
 import com.example.model.Sculpture;
 import org.springframework.data.jpa.repository.Query;
@@ -31,4 +32,7 @@ public interface ArtRepository extends CrudRepository<Art, Long> {
 
     @Query(value = "SELECT * FROM Art s WHERE s.artist_id = :artist_id AND s.art_type='Sculpture' ORDER BY s.year_completed DESC LIMIT 1", nativeQuery = true)
     Sculpture findLastSculptureByArtist(@Param("artist_id") Long artistId);
+
+    @Query("SELECT a FROM Art a WHERE a.name LIKE %:name%")
+    List<Art> searchByName(@Param("name") String name);
 }

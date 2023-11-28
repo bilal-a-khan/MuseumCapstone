@@ -35,7 +35,7 @@ public class Artist extends Person{
         this.yearDead = yearDead;
     }
 
-    @OneToMany(mappedBy = "artist")
+    @OneToMany(mappedBy = "artist", cascade = CascadeType.ALL)
   //  @JsonManagedReference(value = "art-artist")
     @JsonIgnore
     private List<Art> artList;

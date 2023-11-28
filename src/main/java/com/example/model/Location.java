@@ -1,5 +1,6 @@
 package com.example.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
@@ -20,6 +21,7 @@ public class Location {
     private String country;
 
     @OneToOne(mappedBy = "location")
+    @JsonBackReference
     private Museum museum;
 
 }

@@ -38,13 +38,21 @@ public class MuseumController {
 
 
     @GetMapping("/museum/most")
-    public Museum findByMostFilter(@PathParam("style") String style){
-        Museum museumByMostStyle = new Museum();
-        if (StringUtils.isNotBlank(style)) {
+    public Museum findByMostFilter(@PathParam("style") String style, @PathParam("artistID") Long artistID){
+        Museum museumByMost;
+
+        log.debug(style);
+        log.debug(String.valueOf(artistID));
+        if (StringUtils.isNotBlank(style) && artistID == null){
             log.debug("Fetching museum with most art of style: " + style);
-            museumByMostStyle = museumService.findByMostStyle(style);
+            museumByMost = museumService.findByMostStyle(style);
+        } else if (StringUtils.isNotBlank(String.valueOf(artistID)) && style == null) {
+            log.debug("Fetching museum with most art of from Artist ID: " + artistID);
+            museumByMost = museumService.findByMostArtist(artistID);
+        } else{
+            throw new IllegalArgumentException("invalid endpoint");
         }
-        return museumByMostStyle;
+        return museumByMost;
     }
 
 

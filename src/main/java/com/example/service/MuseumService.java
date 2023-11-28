@@ -10,4 +10,6 @@ public interface MuseumService {
     Museum findById(Long id);
 
     Museum findByMostStyle(String style);
+
+    Museum findByMostArtist(long artistID);
 }

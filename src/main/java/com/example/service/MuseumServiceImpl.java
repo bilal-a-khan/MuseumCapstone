@@ -1,19 +1,13 @@
 package com.example.service;
 
-import com.example.model.Art;
-import com.example.model.Museum;
-import com.example.model.Painting;
-import com.example.model.Style;
+import com.example.model.*;
 import com.example.repository.ArtRepository;
 import com.example.repository.MuseumRepository;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 @Slf4j
@@ -21,6 +15,8 @@ import java.util.Optional;
 public class MuseumServiceImpl implements MuseumService {
 
     private MuseumRepository museumRepository;
+
+    private ArtistService artistService;
 
     @Override
     public List<Museum> findAll() {
@@ -45,27 +41,60 @@ public class MuseumServiceImpl implements MuseumService {
                 styleEnum = s;
             }
         }
-            if(styleEnum == null){
-                log.debug("style not found. Throwing null pointer exception");
-                throw new NullPointerException("Style not found");
-            }
+        if (styleEnum == null) {
+            log.debug("style not found. Throwing null pointer exception");
+            throw new NullPointerException("Style not found");
+        }
 
 
         List<Museum> museums = findAll();
 
         Style finalStyleEnum = styleEnum;
-        Optional<Museum> museumMostByStyle = museums.stream().max(Comparator.comparingInt(museum -> countArtOfStyle(museum, finalStyleEnum)));
+        Optional<Museum> museumMostByStyle = museums.stream().max(Comparator.comparingLong(museum -> countArtOfStyle(museum, finalStyleEnum)));
         return museumMostByStyle.orElse(null);
-
     }
 
-    private static int countArtOfStyle(Museum museum, Style style) {
-        List<Painting> paintingList = new ArrayList<>();
-        for (Art art : museum.getArtList()) {
-            if (art instanceof Painting) {
-                paintingList.add((Painting) art);
+    @Override
+    public Museum findByMostArtist(long artistID) {
+
+        List<Artist> artists = artistService.findAll();
+        boolean matchFound = false;
+        for (Artist artist : artists) {
+            if (artist.getId() == artistID) {
+                matchFound = true;
+                break;
             }
         }
-        return (int) paintingList.stream().filter(painting -> painting.getStyle() == style).count();
+
+        if (!matchFound){
+            throw new NullPointerException("No artist found matching ID: " + artistID);
+        }
+
+        List<Museum> museums = findAll();
+
+        Optional<Museum> museumMostByArtist = museums.stream().max(Comparator.comparingLong(museum -> countArtOfArtist(museum, artistID)));
+        return museumMostByArtist.orElse(null);
+    }
+
+
+    private long countArtOfStyle(Museum museum, Style style) {
+        List<Painting> paintingList = new ArrayList<>();
+        for (Art art : museum.getArtList()) {
+            if (art instanceof Painting painting) {
+                paintingList.add(painting);
+            }
+        }
+        return paintingList.stream().filter(painting -> painting.getStyle() == style).count();
+    }
+
+
+    private long countArtOfArtist(Museum museum, Long artistID) {
+        List<Art> artList = new ArrayList<>();
+        for (Art art : museum.getArtList()) {
+            if (Objects.equals(art.getArtist().getId(), artistID)) {
+                artList.add(art);
+            }
+        }
+        return artList.size();
     }
 }

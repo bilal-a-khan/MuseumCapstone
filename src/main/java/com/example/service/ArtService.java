@@ -5,6 +5,7 @@ import com.example.model.Artist;
 import com.example.model.Painting;
 import com.example.model.Sculpture;
 
+import java.awt.*;
 import java.util.List;
 
 public interface ArtService {
@@ -23,4 +24,9 @@ public interface ArtService {
     Sculpture findLastSculptureByArtist(Long artistId);
 
     List<Art> searchByName(String name);
+
+    Painting save(Painting painting);
+    Sculpture save(Sculpture sculpture);
+
+    void deleteById(Long id);
 }

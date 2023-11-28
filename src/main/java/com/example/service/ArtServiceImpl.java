@@ -73,4 +73,19 @@ public class ArtServiceImpl implements ArtService {
         return artRepository.searchByName(name);
     }
 
+    @Override
+    public Painting save(Painting painting) {
+        return artRepository.save(painting);
+    }
+
+    @Override
+    public Sculpture save(Sculpture sculpture){
+        return artRepository.save(sculpture);
+    }
+
+    @Override
+    public void deleteById(Long id) {
+        artRepository.deleteById(id);
+    }
+
 }

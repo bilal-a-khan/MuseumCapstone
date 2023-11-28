@@ -50,4 +50,9 @@ public class ArtistServiceImp implements ArtistService{
     public void deleteById(Long id) {
         this.artistRepository.deleteById(id);
     }
+
+//    @Override
+//    public List<Artist> findSortedAll() {
+//        return artistRepository.findSortedAll();
+//    }
 }

@@ -54,10 +54,12 @@ public class ArtistController {
         return artistService.save(artist);
     }
 
-    @PutMapping("/artist/{id}")
-    public void createArtist(@PathVariable Long id){
+    @DeleteMapping("/artist/{id}")
+    public void deleteArtist(@PathVariable Long id){
         artistService.deleteById(id);
         log.debug("Artist object with id = " + id + " has been deleted.");
     }
+
+
 
 }

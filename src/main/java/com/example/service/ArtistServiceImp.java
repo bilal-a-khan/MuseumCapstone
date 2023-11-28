@@ -51,8 +51,8 @@ public class ArtistServiceImp implements ArtistService{
         this.artistRepository.deleteById(id);
     }
 
-//    @Override
-//    public List<Artist> findSortedAll() {
-//        return artistRepository.findSortedAll();
-//    }
+    @Override
+    public List<Artist> findSortedAll() {
+        return artistRepository.findSortedAll();
+    }
 }

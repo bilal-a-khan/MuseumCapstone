@@ -32,4 +32,5 @@ public interface ArtRepository extends CrudRepository<Art, Long> {
 
     @Query("SELECT a FROM Art a WHERE a.name LIKE %:name%")
     List<Art> searchByName(@Param("name") String name);
+
 }

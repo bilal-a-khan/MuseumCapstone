@@ -13,8 +13,8 @@ public interface ArtistRepository extends CrudRepository<Artist, Long> {
 
     @Query("SELECT a FROM Artist a WHERE a.name LIKE %:name%")
     List<Artist> searchByName(@Param("name") String name);
-
-//    @Query("SELECT a FROM Artist a  ")
-//    List<Artist> findSortedAll();
+    
+    @Query("SELECT artist FROM Painting p GROUP BY artist ORDER BY COUNT(artist) DESC")
+    List<Artist> findSortedAll();
 
 }

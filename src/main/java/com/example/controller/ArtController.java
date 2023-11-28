@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 @RestController
@@ -97,6 +98,7 @@ public class ArtController {
         artService.deleteById(id);
         log.debug("Artist object with id = " + id + " has been deleted.");
     }
+
 
 
 

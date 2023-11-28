@@ -40,8 +40,8 @@ public class Artist extends Person{
     @JsonIgnore
     private List<Art> artList;
 
-//    public int getArtCount(){
-//        return this.artList.size();
-//    }
+    public int getArtCount(){
+        return this.artList.size();
+    }
 
 }

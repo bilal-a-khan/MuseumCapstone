@@ -37,12 +37,7 @@ public class ArtistController {
         return artists;
     }
 
-//    @GetMapping("/sortedartists")
-//    public List<Artist> getSortedArtists(){
-//        List<Artist> artists = Collections.emptyList();
-//        artists = artistService.findSortedAll();
-//        return artists;
-//    }
+
 
     @GetMapping("/artist/{id}")
     public Artist getMessage(@PathVariable Long id){
@@ -70,6 +65,11 @@ public class ArtistController {
         log.debug("Artist object with id = " + id + " has been deleted.");
     }
 
-
+    @GetMapping("/sortedartists")
+    public List<Artist> getSortedArtists(){
+        List<Artist> artists = Collections.emptyList();
+        artists = artistService.findSortedAll();
+        return artists;
+    }
 
 }

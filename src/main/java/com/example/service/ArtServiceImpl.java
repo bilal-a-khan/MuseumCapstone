@@ -87,5 +87,4 @@ public class ArtServiceImpl implements ArtService {
     public void deleteById(Long id) {
         artRepository.deleteById(id);
     }
-
 }

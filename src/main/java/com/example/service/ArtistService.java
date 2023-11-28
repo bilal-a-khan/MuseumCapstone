@@ -16,6 +16,5 @@ public interface ArtistService {
     Artist save(Artist artist);
     void deleteById(Long id);
 
-
-//    List<Artist> findSortedAll();
+    List<Artist> findSortedAll();
 }

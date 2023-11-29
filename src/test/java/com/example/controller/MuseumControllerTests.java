@@ -18,6 +18,7 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @Sql("classpath:test-data.sql")
 @SpringBootTest
@@ -45,5 +46,107 @@ public class MuseumControllerTests {
 
         assertEquals(expectedLength, museums.length);
 
+    }
+
+    @Test
+    public void testGettingOneMuseum() throws Exception {
+        String expectedName = "Louvre Museum";
+        int id = 10;
+
+        ResultActions resultActions = this.mockMvc.perform(MockMvcRequestBuilders.get("/museum/"+id)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .accept(MediaType.APPLICATION_JSON))
+                .andExpect(MockMvcResultMatchers.status().isOk());
+
+        MvcResult result = resultActions.andReturn();
+        String contentAsString = result.getResponse().getContentAsString();
+
+        Museum museum = mapper.readValue(contentAsString, Museum.class);
+
+        assertEquals(expectedName, museum.getName());
+
+    }
+
+    @Test
+    public void testGettingMuseumMostFilterWithStyle() throws Exception {
+        String testStyle = "RENAISSANCE";
+        String expectedName = "Louvre Museum";
+
+        ResultActions resultActions = this.mockMvc.perform(MockMvcRequestBuilders.get("/museum/most?style="+testStyle)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .accept(MediaType.APPLICATION_JSON))
+                .andExpect(MockMvcResultMatchers.status().isOk());
+
+        MvcResult result = resultActions.andReturn();
+        String contentAsString = result.getResponse().getContentAsString();
+
+        Museum museum = mapper.readValue(contentAsString, Museum.class);
+
+        assertEquals(expectedName, museum.getName());
+
+    }
+
+    @Test
+    public void testGettingMuseumMostFilterWithId() throws Exception {
+        int testId = 10;
+        String expectedName = "Louvre Museum";
+
+        ResultActions resultActions = this.mockMvc.perform(MockMvcRequestBuilders.get("/museum/most?artistID="+testId)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .accept(MediaType.APPLICATION_JSON))
+                .andExpect(MockMvcResultMatchers.status().isOk());
+
+        MvcResult result = resultActions.andReturn();
+        String contentAsString = result.getResponse().getContentAsString();
+
+        Museum museum = mapper.readValue(contentAsString, Museum.class);
+
+        assertEquals(expectedName, museum.getName());
+
+    }
+
+    @Test
+    public void testDeleteOneMuseum() throws Exception {
+        int id = 10;
+        ResultActions resultActions = this.mockMvc.perform(MockMvcRequestBuilders.delete("/museum/"+id))
+                .andExpect(MockMvcResultMatchers.status().isOk());
+    }
+
+    @Test
+    public void testCreateMuseum() throws Exception{
+
+        Museum museum = new Museum();
+
+        ResultActions resultActions = this.mockMvc.perform(MockMvcRequestBuilders.post("/museum")
+                        .content(mapper.writeValueAsString(museum))
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .accept(MediaType.APPLICATION_JSON))
+                .andExpect(MockMvcResultMatchers.status().isOk());
+
+        MvcResult result = resultActions.andReturn();
+        String contentAsString = result.getResponse().getContentAsString();
+        Museum museumResult = mapper.readValue(contentAsString, Museum.class);
+
+        assertEquals(1,museumResult.getId());
+    }
+
+    @Test
+    public void testUpdateMuseum() throws Exception{
+
+        Museum museum = new Museum();
+        museum.setId(10L);
+        museum.setName("Changed name");
+
+        ResultActions resultActions = this.mockMvc.perform(MockMvcRequestBuilders.put("/museum")
+                        .content(mapper.writeValueAsString(museum))
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .accept(MediaType.APPLICATION_JSON))
+                .andExpect(MockMvcResultMatchers.status().isOk());
+
+        MvcResult result = resultActions.andReturn();
+        String contentAsString = result.getResponse().getContentAsString();
+        Museum museumResult = mapper.readValue(contentAsString, Museum.class);
+
+        assertEquals(museum.getName(),museumResult.getName());
     }
 }

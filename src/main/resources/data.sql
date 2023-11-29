@@ -21,3 +21,5 @@ INSERT INTO art (art_type, id, name, artist_id, medium, museum_id, year_complete
 INSERT INTO art (art_type, id, name, artist_id, medium, museum_id, year_completed, back_story, style) VALUES ('Painting', 13, 'Self-Portrait as a Painter', 12, 'OIL', 12, 1888, 'story....', 'IMPRESSIONIST');
 INSERT INTO art (art_type, id, name, artist_id, medium, museum_id, year_completed, back_story, style) VALUES ('Painting', 14, 'The Yellow House', 12, 'OIL', 12, 1888, 'yellow house....', 'IMPRESSIONIST');
 INSERT INTO art (art_type, id, name, artist_id, medium, museum_id, year_completed, back_story, style) VALUES ('Painting', 15, 'Liberty Leading the People', 13, 'OIL', 10, 1830, 'Liberty Leading the People.....', 'ROMANTICISM');
+
+INSERT INTO art (art_type, id, name, artist_id, medium, museum_id, year_completed, back_story, style) VALUES ('Sculpture', 16, 'David2.0', 11, 'MARBLE', 11, 1504, 'David....', 'RENAISSANCE');

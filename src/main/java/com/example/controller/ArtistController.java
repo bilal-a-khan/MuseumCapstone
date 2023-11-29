@@ -26,66 +26,69 @@ public class ArtistController {
     private final ArtistService artistService;
 
     @Autowired
-    public ArtistController(ArtistService artistService){
+    public ArtistController(ArtistService artistService) {
         this.artistService = artistService;
     }
 
     @GetMapping("/artists")
-    public List<ArtistDto> getAllArtists(){
+    public List<ArtistDto> getAllArtists() {
         List<Artist> artists = Collections.emptyList();
         artists = artistService.findAll();
 
         List<ArtistDto> dtos = new ArrayList<>();
 
-        for (Artist artist: artists){
+        for (Artist artist : artists) {
+
             List<ArtDto> d = new ArrayList<>();
-            for (Art art : artist.getArtList())
-                d.add(ArtDtoConverter.convert(art));
+            for (Art art : artist.getArtList()) {
+
+                d.add(ArtDtoConverter.convertWithoutArtist(art));
+            }
+
             dtos.add(ArtistDtoConverter.convert(artist, d));
+
         }
 
-        dtos.sort(Comparator.comparing(ArtistDto::getName));
+        //dtos.sort(Comparator.comparing(ArtistDto::getId));
         return dtos;
     }
 
     @GetMapping("/artist/{id}")
-    public ArtistDto getMessage(@PathVariable Long id){
+    public ArtistDto getMessage(@PathVariable Long id) {
 
         Artist artist = artistService.findById(id);
 
         List<ArtDto> dtos = new ArrayList<>();
-        for (Art art : artist.getArtList())
-            dtos.add(ArtDtoConverter.convert(art));
-
+        for (Art art : artist.getArtList()) {
+            dtos.add(ArtDtoConverter.convertWithoutArtist(art));
+        }
         return ArtistDtoConverter.convert(artist, dtos);
-
-
 
     }
 
     @GetMapping("/artist/search")
-    public List<Artist> searchByName(@PathParam("name") String name){
+    public List<Artist> searchByName(@PathParam("name") String name) {
         return artistService.searchByName(name);
     }
 
     @PostMapping("/artist")
-    public Artist createArtist(@RequestBody Artist artist){
+    public Artist createArtist(@RequestBody Artist artist) {
         return artistService.save(artist);
     }
 
     @PutMapping("/artist")
-    public Artist updateArtist(@RequestBody Artist artist){
+    public Artist updateArtist(@RequestBody Artist artist) {
         return artistService.save(artist);
     }
 
     @DeleteMapping("/artist/{id}")
-    public void deleteArtist(@PathVariable Long id){
+    public void deleteArtist(@PathVariable Long id) {
         artistService.deleteById(id);
         log.debug("Artist object with id = " + id + " has been deleted.");
     }
 
     @GetMapping("/sortedartists")
-    public List<Artist> getSortedArtists(){
+    public List<Artist> getSortedArtists() {
         List<Artist> artists = Collections.emptyList();
         artists = artistService.findSortedAll();
         return artists;

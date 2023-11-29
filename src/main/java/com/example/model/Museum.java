@@ -13,7 +13,7 @@ import java.util.List;
 @Entity
 @JsonIdentityInfo(
         generator = ObjectIdGenerators.PropertyGenerator.class,
-        property = "id")
+        property = "id",scope = Museum.class)
 public class Museum {
 
     @Id

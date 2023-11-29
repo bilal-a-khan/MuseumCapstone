@@ -2,6 +2,7 @@ package com.example.dto;
 
 import com.example.model.Art;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.OneToMany;
 import lombok.AllArgsConstructor;
@@ -11,6 +12,7 @@ import java.util.Collections;
 import java.util.List;
 
 @Data
+@JsonInclude(JsonInclude.Include.NON_DEFAULT)
 @AllArgsConstructor
 public class ArtistDto {
 
@@ -21,11 +23,10 @@ public class ArtistDto {
 
     private List<ArtDto> artList;
 
-    public ArtistDto(Long id, String name, int yearBorn, int yearDead) {
+
+    public ArtistDto(Long id, String name) {
         this.id = id;
         this.name = name;
-        this.yearBorn = yearBorn;
-        this.yearDead = yearDead;
-        // this.artList = Collections.emptyList();
     }
+
 }

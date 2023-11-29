@@ -19,6 +19,10 @@ public class ArtistDtoConverter {
                 artist.getYearBorn(), artist.getYearDead(), dtos);
     }
 
+    public static ArtistDto convert(Artist artist){
+        return new ArtistDto(artist.getId(), artist.getName());
+    }
+
 
 //    public static ArtistDto convertWithArtList(Artist artist){
 //

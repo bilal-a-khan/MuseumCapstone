@@ -1,8 +1,10 @@
 package com.example.controller;
 
+import com.example.dto.MuseumDto;
 import com.example.model.*;
 import com.example.service.ArtistService;
 import com.example.service.MuseumService;
+import com.example.utils.MuseumDtoConverter;
 import io.micrometer.common.util.StringUtils;
 import jakarta.websocket.server.PathParam;
 import lombok.AllArgsConstructor;
@@ -20,15 +22,22 @@ public class MuseumController {
     private final MuseumService museumService;
 
     @GetMapping("/museum")
-    public List<Museum> getAllMuseum() {
+    public List<MuseumDto> getAllMuseum() {
+
+        List<MuseumDto> museumDtos = new ArrayList<>();
+
+        for (Museum m: museumService.findAll()) {
+         museumDtos.add(MuseumDtoConverter.convert(m));
+        }
+
         log.debug("Fetching all museums");
-        return museumService.findAll();
+        return museumDtos;
     }
 
     @GetMapping("/museum/{id}")
-    public Museum findByID(@PathVariable Long id) {
+    public MuseumDto findByID(@PathVariable Long id) {
         log.debug("Fetching museum by ID: " + id);
-        return museumService.findById(id);
+        return MuseumDtoConverter.convert(museumService.findById(id));
     }
 
 

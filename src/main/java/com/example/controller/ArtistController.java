@@ -44,12 +44,8 @@ public class ArtistController {
 
                 d.add(ArtDtoConverter.convertWithoutArtist(art));
             }
-
             dtos.add(ArtistDtoConverter.convert(artist, d));
-
         }
-
-        //dtos.sort(Comparator.comparing(ArtistDto::getId));
         return dtos;
     }
 
@@ -67,8 +63,22 @@ public class ArtistController {
     }
 
     @GetMapping("/artist/search")
-    public List<Artist> searchByName(@PathParam("name") String name) {
-        return artistService.searchByName(name);
+    public List<ArtistDto> searchByName(@PathParam("name") String name) {
+
+        List<Artist> artists = artistService.searchByName(name);
+
+        List<ArtistDto> dtos = new ArrayList<>();
+
+        for (Artist artist : artists) {
+
+            List<ArtDto> d = new ArrayList<>();
+            for (Art art : artist.getArtList()) {
+
+                d.add(ArtDtoConverter.convertWithoutArtist(art));
+            }
+            dtos.add(ArtistDtoConverter.convert(artist, d));
+        }
+        return dtos;
     }
 
     @PostMapping("/artist")
@@ -88,10 +98,21 @@ public class ArtistController {
     }
 
     @GetMapping("/sortedartists")
-    public List<Artist> getSortedArtists() {
-        List<Artist> artists = Collections.emptyList();
-        artists = artistService.findSortedAll();
-        return artists;
+    public List<ArtistDto> getSortedArtists() {
+        List<Artist> artists = artistService.findSortedAll();
+
+        List<ArtistDto> dtos = new ArrayList<>();
+
+        for (Artist artist : artists) {
+
+            List<ArtDto> d = new ArrayList<>();
+            for (Art art : artist.getArtList()) {
+
+                d.add(ArtDtoConverter.convertWithoutArtist(art));
+            }
+            dtos.add(ArtistDtoConverter.convert(artist, d));
+        }
+        return dtos;
     }
 
 }

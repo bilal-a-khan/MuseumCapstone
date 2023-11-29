@@ -50,6 +50,17 @@ public class MuseumController {
 
     @DeleteMapping("/museum/{id}")
     public void deleteMuseum(@PathVariable Long id){
+        Museum museum = museumService.findById(id);
+
+        List<Art> artList = museum.getArtList();
+        for (Art a:artList) {
+            a.setMuseum(null);
+        }
+
+//        museum.setArtList(artList);
+//
+//        museumService.save(museum);
+
         museumService.deleteById(id);
         log.debug("Museum object with id = " + id + " has been deleted.");
     }

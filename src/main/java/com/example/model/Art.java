@@ -3,6 +3,8 @@ package com.example.model;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -38,8 +40,9 @@ public abstract class Art {
     @Enumerated(value = EnumType.STRING)
     private Medium medium;
 
-    @ManyToOne
     //@JsonBackReference
+    @ManyToOne
+    @Nullable
     private Museum museum;
 
     private int yearCompleted;

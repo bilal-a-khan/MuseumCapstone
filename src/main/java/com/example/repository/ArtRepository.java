@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Repository
-public interface ArtRepository extends CrudRepository<Art, Long>, ArtRepositoryCustom {
+public interface ArtRepository extends CrudRepository<Art, Long>{
 //    @Query("SELECT a FROM Art a WHERE a.artist_id = :id")
 //    List<Art> findArtByArtistId(@Param("id") Long id);
 

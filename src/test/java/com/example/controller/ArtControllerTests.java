@@ -3,100 +3,233 @@ package com.example.controller;
 import com.example.model.Art;
 import com.example.model.Painting;
 import com.example.model.Sculpture;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.client.RestTemplate;
+import org.springframework.http.MediaType;
+import org.springframework.test.annotation.DirtiesContext;
+import org.springframework.test.context.TestPropertySource;
+import org.springframework.test.context.jdbc.Sql;
+import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.MvcResult;
+import org.springframework.test.web.servlet.ResultActions;
+import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
+import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
-import java.util.Arrays;
-import java.util.List;
+import static org.junit.jupiter.api.Assertions.assertAll;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
-import static org.junit.jupiter.api.Assertions.*;
-
+@Sql("classpath:test-data.sql")
 @SpringBootTest
+@AutoConfigureMockMvc
+@DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
+@TestPropertySource(properties = {"spring.sql.init.mode=never"})
 public class ArtControllerTests {
 
-//    @Test
-//    public void testGetAllArt() {
-//        RestTemplate restTemplate = new RestTemplate();
-//        ResponseEntity<Art[]> response =
-//                restTemplate.getForEntity("http://localhost:8080/art", Art[].class);
-//        Art[] arts = response.getBody();
-//
-//        List<Art> artList = Arrays.asList(arts);
-//
-//        assertEquals(6, artList.size());
-//    }
+        @Autowired
+        MockMvc mockMvc;
+        ObjectMapper mapper = new ObjectMapper();
+
 
     @Test
-    public void testGetAllPaintings() {
-        RestTemplate restTemplate = new RestTemplate();
-        ResponseEntity<Painting[]> response =
-                restTemplate.getForEntity("http://localhost:8080/painting", Painting[].class);
-        Painting[] paintings = response.getBody();
+    public void testGettingAllArt() throws Exception {
+        int expectedLength = 9;
 
-        List<Painting> paintingList = Arrays.asList(paintings);
+        ResultActions resultActions = this.mockMvc.perform(MockMvcRequestBuilders.get("/art")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .accept(MediaType.APPLICATION_JSON))
+                .andExpect(MockMvcResultMatchers.status().isOk());
 
-        assertEquals(4, paintingList.size());
+        MvcResult result = resultActions.andReturn();
+        String contentAsString = result.getResponse().getContentAsString();
+
+        Art[] arts = mapper.readValue(contentAsString, Art[].class);
+
+        System.out.println("Expected length: " + expectedLength);
+        System.out.println("actual length: " + arts.length);
+
+        assertEquals(expectedLength, arts.length);
+
     }
 
-//    @Test
-//    public void testGetAllSculptures() {
-//        RestTemplate restTemplate = new RestTemplate();
-//        ResponseEntity<Sculpture[]> response =
-//                restTemplate.getForEntity("http://localhost:8080/sculpture", Sculpture[].class);
-//        Sculpture[] sculptures = response.getBody();
-//
-//        List<Sculpture> sculptureList = Arrays.asList(sculptures);
-//
-//        assertEquals(2, sculptureList.size());
-//    }
+
+        @Test
+        public void testGettingAllPaintings() throws Exception {
+            int expectedLength = 4;
+
+            ResultActions resultActions = this.mockMvc.perform(MockMvcRequestBuilders.get("/painting")
+                            .contentType(MediaType.APPLICATION_JSON)
+                            .accept(MediaType.APPLICATION_JSON))
+                    .andExpect(MockMvcResultMatchers.status().isOk());
+
+            MvcResult result = resultActions.andReturn();
+            String contentAsString = result.getResponse().getContentAsString();
+
+            Painting[] paintings = mapper.readValue(contentAsString, Painting[].class);
+
+            System.out.println("Expected length: " + expectedLength);
+            System.out.println("actual length: " + paintings.length);
+
+            assertEquals(expectedLength, paintings.length);
+        }
 
     @Test
-    public void testGetPaintingById() {
+    public void testGettingAllSculptures() throws Exception {
+        int expectedLength = 5;
 
-        long artId = 10L;
-        RestTemplate restTemplate = new RestTemplate();
-        ResponseEntity<Painting> response = restTemplate.getForEntity("http://localhost:8080/art/" + artId, Painting.class);
+        ResultActions resultActions = this.mockMvc.perform(MockMvcRequestBuilders.get("/sculpture")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .accept(MediaType.APPLICATION_JSON))
+                .andExpect(MockMvcResultMatchers.status().isOk());
 
-        assertEquals(200, response.getStatusCodeValue(), "Status code should be 200 OK");
-        assertNotNull(response.getBody(), "Response body should not be null");
+        MvcResult result = resultActions.andReturn();
+        String contentAsString = result.getResponse().getContentAsString();
 
-        Painting painting = response.getBody();
-        assertEquals(artId, painting.getId(), "The ID of the retrieved art should match the requested ID");
+        Sculpture[] sculptures = mapper.readValue(contentAsString, Sculpture[].class);
+
+        System.out.println("Expected length: " + expectedLength);
+        System.out.println("actual length: " + sculptures.length);
+
+        assertEquals(expectedLength, sculptures.length);
+    }
+
+
+    @Test
+    public void testGettingOneArt() throws Exception {
+        String expectedName = "Mona Lisa";
+        int id = 10;
+
+        ResultActions resultActions = this.mockMvc.perform(MockMvcRequestBuilders.get("/art/"+id)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .accept(MediaType.APPLICATION_JSON))
+                .andExpect(MockMvcResultMatchers.status().isOk());
+
+        MvcResult result = resultActions.andReturn();
+        String contentAsString = result.getResponse().getContentAsString();
+
+        Art art = mapper.readValue(contentAsString, Art.class);
+
+        System.out.println("Expected length: " + expectedName);
+        System.out.println("actual length: " + art.getName());
+
+        assertEquals(expectedName, art.getName());
     }
 
     @Test
-    public void testGetSculpturesById() {
+    public void testDeleteOneArt() throws Exception {
+        int id = 10;
+        ResultActions resultActions = this.mockMvc.perform(MockMvcRequestBuilders.delete("/art/"+id))
+                .andExpect(MockMvcResultMatchers.status().isOk());
+    }
+    @Test
+    public void testCreatePainting() throws Exception{
 
-        long artId = 11L;
-        RestTemplate restTemplate = new RestTemplate();
-        ResponseEntity<Sculpture> response = restTemplate.getForEntity("http://localhost:8080/art/" + artId, Sculpture.class);
+        Painting painting = new Painting();
 
-        assertEquals(200, response.getStatusCodeValue(), "Status code should be 200 OK");
-        assertNotNull(response.getBody(), "Response body should not be null");
+        ResultActions resultActions = this.mockMvc.perform(MockMvcRequestBuilders.post("/painting")
+                        .content(mapper.writeValueAsString(painting))
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .accept(MediaType.APPLICATION_JSON))
+                .andExpect(MockMvcResultMatchers.status().isOk());
 
-        Sculpture sculpture = response.getBody();
-        assertEquals(artId, sculpture.getId(), "The ID of the retrieved art should match the requested ID");
+        MvcResult result = resultActions.andReturn();
+        String contentAsString = result.getResponse().getContentAsString();
+        Painting paintingResult = mapper.readValue(contentAsString, Painting.class);
+
+        System.out.println("Expected length: " + 1);
+        System.out.println("actual length: " + paintingResult.getId());
+
+        assertEquals(1,paintingResult.getId());
     }
 
-//    @Test
-//    public void testGetArtById() {
-//        assertArtType(10L, Painting.class);
-//        assertArtType(11L, Sculpture.class);
-//        assertArtType(12L, Sculpture.class);
-//        assertArtType(13L, Painting.class);
-//        assertArtType(14L, Painting.class);
-//        assertArtType(15L, Painting.class);
-//    }
-//
-//    private void assertArtType(Long artId, Class<?> expectedType) {
-//        RestTemplate restTemplate = new RestTemplate();
-//        ResponseEntity<Art> response = restTemplate.getForEntity("http://localhost:8080/art/" + artId, Art.class);
-//        assertEquals(200, response.getStatusCodeValue(), "Status code should be 200 OK");
-//        assertNotNull(response.getBody(), "Response body should not be null");
-//        assertTrue(expectedType.isInstance(response.getBody()), "Expected type does not match the actual type");
-//    }
+    @Test
+    public void testCreateSculpture() throws Exception{
 
+        Sculpture sculpture = new Sculpture();
 
-}
+        ResultActions resultActions = this.mockMvc.perform(MockMvcRequestBuilders.post("/sculpture")
+                        .content(mapper.writeValueAsString(sculpture))
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .accept(MediaType.APPLICATION_JSON))
+                .andExpect(MockMvcResultMatchers.status().isOk());
+
+        MvcResult result = resultActions.andReturn();
+        String contentAsString = result.getResponse().getContentAsString();
+        Sculpture sculptureResult = mapper.readValue(contentAsString, Sculpture.class);
+
+        System.out.println("Expected length: " + 1);
+        System.out.println("actual length: " + sculptureResult.getId());
+
+        assertEquals(1,sculptureResult.getId());
+    }
+
+    @Test
+    public void testUpdatePainting() throws Exception{
+
+        Painting painting = new Painting();
+        painting.setId(10L);
+        painting.setName("Changed name");
+
+        ResultActions resultActions = this.mockMvc.perform(MockMvcRequestBuilders.put("/painting")
+                        .content(mapper.writeValueAsString(painting))
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .accept(MediaType.APPLICATION_JSON))
+                .andExpect(MockMvcResultMatchers.status().isOk());
+
+        MvcResult result = resultActions.andReturn();
+        String contentAsString = result.getResponse().getContentAsString();
+        Painting paintingResult = mapper.readValue(contentAsString, Painting.class);
+
+        System.out.println("Expected length: " + painting.getName());
+        System.out.println("actual length: " + paintingResult.getName());
+
+        assertEquals(painting.getName(),paintingResult.getName());
+    }
+
+    @Test
+    public void testUpdateSculpture() throws Exception{
+
+        Sculpture sculpture = new Sculpture();
+        sculpture.setId(10L);
+        sculpture.setName("Changed name");
+
+        ResultActions resultActions = this.mockMvc.perform(MockMvcRequestBuilders.put("/sculpture")
+                        .content(mapper.writeValueAsString(sculpture))
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .accept(MediaType.APPLICATION_JSON))
+                .andExpect(MockMvcResultMatchers.status().isOk());
+
+        MvcResult result = resultActions.andReturn();
+        String contentAsString = result.getResponse().getContentAsString();
+        Sculpture sculptureResult = mapper.readValue(contentAsString, Sculpture.class);
+
+        System.out.println("Expected length: " + sculpture.getName());
+        System.out.println("actual length: " + sculptureResult.getName());
+
+        assertEquals(sculpture.getName(),sculptureResult.getName());
+    }
+
+    @Test
+    public void testGetArtWithId() throws Exception {
+        int testId = 11;
+        String expectedName = "Dying Slave";
+
+        ResultActions resultActions = this.mockMvc.perform(MockMvcRequestBuilders.get("/art/"+testId)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .accept(MediaType.APPLICATION_JSON))
+                .andExpect(MockMvcResultMatchers.status().isOk());
+
+        MvcResult result = resultActions.andReturn();
+        String contentAsString = result.getResponse().getContentAsString();
+
+        Art art = mapper.readValue(contentAsString, Art.class);
+
+        System.out.println("Expected length: " + expectedName);
+        System.out.println("actual length: " + art.getName());
+
+        assertEquals(expectedName, art.getName());
+    }
+
+        }

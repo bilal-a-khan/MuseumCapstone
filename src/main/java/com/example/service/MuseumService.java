@@ -12,4 +12,8 @@ public interface MuseumService {
     Museum findByMostStyle(String style);
 
     Museum findByMostArtist(long artistID);
+
+    void deleteById(Long id);
+
+    Museum save(Museum museum);
 }

@@ -1,18 +1,13 @@
 package com.example.controller;
 
-import com.example.model.Art;
-import com.example.model.Artist;
-import com.example.model.Museum;
-import com.example.model.Painting;
+import com.example.model.*;
 import com.example.service.ArtistService;
 import com.example.service.MuseumService;
 import io.micrometer.common.util.StringUtils;
 import jakarta.websocket.server.PathParam;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -41,8 +36,6 @@ public class MuseumController {
     public Museum findByMostFilter(@PathParam("style") String style, @PathParam("artistID") Long artistID){
         Museum museumByMost;
 
-        log.debug(style);
-        log.debug(String.valueOf(artistID));
         if (StringUtils.isNotBlank(style) && artistID == null){
             log.debug("Fetching museum with most art of style: " + style);
             museumByMost = museumService.findByMostStyle(style);
@@ -55,6 +48,20 @@ public class MuseumController {
         return museumByMost;
     }
 
+    @DeleteMapping("/museum/{id}")
+    public void deleteMuseum(@PathVariable Long id){
+        museumService.deleteById(id);
+        log.debug("Museum object with id = " + id + " has been deleted.");
+    }
 
+    @PostMapping("/museum")
+    public Museum createMuseum(@RequestBody Museum museum){
+        return museumService.save(museum);
+    }
+
+    @PutMapping ("/museum")
+    public Museum updatingMuseum(@RequestBody Museum museum){
+        return museumService.save(museum);
+    }
 
 }

@@ -76,6 +76,16 @@ public class MuseumServiceImpl implements MuseumService {
         return museumMostByArtist.orElse(null);
     }
 
+    @Override
+    public void deleteById(Long id) {
+        museumRepository.deleteById(id);
+    }
+
+    @Override
+    public Museum save(Museum museum) {
+        return museumRepository.save(museum);
+    }
+
 
     private long countArtOfStyle(Museum museum, Style style) {
         List<Painting> paintingList = new ArrayList<>();

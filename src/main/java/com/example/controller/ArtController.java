@@ -98,6 +98,4 @@ public class ArtController {
         log.debug("Artist object with id = " + id + " has been deleted.");
     }
 
-
-
 }

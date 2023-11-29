@@ -1,12 +1,10 @@
 package com.example.model;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import com.fasterxml.jackson.annotation.*;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.Internal;
 
 import java.util.List;
 
@@ -28,7 +26,7 @@ public class Museum {
     private Curator curator;
 
     @OneToMany(mappedBy = "museum")
-    @JsonManagedReference
+    //@JsonManagedReference
     private List<Art> artList;
 
     @OneToOne(cascade = CascadeType.ALL)

@@ -1,15 +1,20 @@
 package com.example.controller;
 
 
+import com.example.dto.ArtDto;
+import com.example.dto.ArtistDto;
 import com.example.model.Art;
 import com.example.model.Artist;
 import com.example.service.ArtistService;
+import com.example.utils.ArtDtoConverter;
+import com.example.utils.ArtistDtoConverter;
 import com.fasterxml.jackson.databind.deser.CreatorProperty;
 import jakarta.websocket.server.PathParam;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
@@ -26,22 +31,36 @@ public class ArtistController {
     }
 
     @GetMapping("/artists")
-    public List<Artist> getAllArtists(){
+    public List<ArtistDto> getAllArtists(){
         List<Artist> artists = Collections.emptyList();
         artists = artistService.findAll();
 
-        // Rank the artists by number of paintings hanging in museums
-        // artists.sort(Comparator.comparing((artist) -> artist.getArtList().size()));
+        List<ArtistDto> dtos = new ArrayList<>();
 
-        artists.sort(Comparator.comparing(Artist::getName));
-        return artists;
+        for (Artist artist: artists){
+            List<ArtDto> d = new ArrayList<>();
+            for (Art art : artist.getArtList())
+                d.add(ArtDtoConverter.convert(art));
+            dtos.add(ArtistDtoConverter.convert(artist, d));
+        }
+
+        dtos.sort(Comparator.comparing(ArtistDto::getName));
+        return dtos;
     }
 
-
-
     @GetMapping("/artist/{id}")
-    public Artist getMessage(@PathVariable Long id){
-        return artistService.findById(id);
+    public ArtistDto getMessage(@PathVariable Long id){
+
+        Artist artist = artistService.findById(id);
+
+        List<ArtDto> dtos = new ArrayList<>();
+        for (Art art : artist.getArtList())
+            dtos.add(ArtDtoConverter.convert(art));
+
+        return ArtistDtoConverter.convert(artist, dtos);
+
+
+
     }
 
     @GetMapping("/artist/search")

@@ -37,7 +37,7 @@ public class Artist extends Person{
 
     @OneToMany(mappedBy = "artist", cascade = CascadeType.ALL)
   //  @JsonManagedReference(value = "art-artist")
-    @JsonIgnore
+//    @JsonIgnore
     private List<Art> artList;
 
     public int getArtCount(){

@@ -21,9 +21,3 @@ INSERT INTO art (art_type, id, name, artist_id, medium, museum_id, year_complete
 INSERT INTO art (art_type, id, name, artist_id, medium, museum_id, year_completed, back_story, style) VALUES ('Painting', 13, 'Self-Portrait as a Painter', 12, 'OIL', 12, 1888, 'story....', 'IMPRESSIONIST');
 INSERT INTO art (art_type, id, name, artist_id, medium, museum_id, year_completed, back_story, style) VALUES ('Painting', 14, 'The Yellow House', 12, 'OIL', 12, 1888, 'yellow house....', 'IMPRESSIONIST');
 INSERT INTO art (art_type, id, name, artist_id, medium, museum_id, year_completed, back_story, style) VALUES ('Painting', 15, 'Liberty Leading the People', 13, 'OIL', 10, 1830, 'Liberty Leading the People.....', 'ROMANTICISM');
-
-INSERT INTO art (art_type, id, name, artist_id, medium, museum_id, year_completed, back_story, style) VALUES ('Sculpture', 16, 'Mona Lisa23', 10, 'MARBLE', 10, 1503, 'Mona Lisa story.....', 'RENAISSANCE');
-INSERT INTO art (art_type, id, name, artist_id, medium, museum_id, year_completed, back_story, style) VALUES ('Sculpture', 17, 'Mona Lisa34', 10, 'MARBLE', 10, 1503, 'Mona Lisa story.....', 'RENAISSANCE');
-INSERT INTO art (art_type, id, name, artist_id, medium, museum_id, year_completed, back_story, style) VALUES ('Sculpture', 18, 'Mona Lisa56', 10, 'MARBLE', 10, 1503, 'Mona Lisa story.....', 'RENAISSANCE');
-
-

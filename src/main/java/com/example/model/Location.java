@@ -16,7 +16,8 @@ import lombok.NoArgsConstructor;
 @Entity
 @JsonIdentityInfo(
         generator = ObjectIdGenerators.PropertyGenerator.class,
-        property = "id")
+        property = "id",
+        scope = Location.class)
 public class Location {
 
     @Id

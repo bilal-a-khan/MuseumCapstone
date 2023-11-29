@@ -21,7 +21,8 @@ import java.util.List;
 @Entity
 @JsonIdentityInfo(
         generator = ObjectIdGenerators.PropertyGenerator.class,
-        property = "id")
+        property = "id",
+        scope = Artist.class)
 public class Artist extends Person{
 
     private int yearDead;
@@ -40,8 +41,5 @@ public class Artist extends Person{
     @JsonIgnore
     private List<Art> artList;
 
-    public int getArtCount(){
-        return this.artList.size();
-    }
 
 }

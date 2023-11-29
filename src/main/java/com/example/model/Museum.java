@@ -23,14 +23,14 @@ public class Museum {
 
     private String name;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne(cascade = CascadeType.PERSIST)
     private Curator curator;
 
     @OneToMany(mappedBy = "museum")
     //@JsonManagedReference
     private List<Art> artList;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne(cascade = CascadeType.PERSIST)
    // @JsonBackReference
     private Location location;
 

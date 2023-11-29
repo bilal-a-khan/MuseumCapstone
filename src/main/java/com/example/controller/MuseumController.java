@@ -42,15 +42,16 @@ public class MuseumController {
 
 
     @GetMapping("/museum/most")
-    public Museum findByMostFilter(@PathParam("style") String style, @PathParam("artistID") Long artistID){
-        Museum museumByMost;
+    public MuseumDto findByMostFilter(@PathParam("style") String style, @PathParam("artistID") Long artistID){
+
+        MuseumDto museumByMost;
 
         if (StringUtils.isNotBlank(style) && artistID == null){
             log.debug("Fetching museum with most art of style: " + style);
-            museumByMost = museumService.findByMostStyle(style);
+            museumByMost = MuseumDtoConverter.convert(museumService.findByMostStyle(style));
         } else if (StringUtils.isNotBlank(String.valueOf(artistID)) && style == null) {
             log.debug("Fetching museum with most art of from Artist ID: " + artistID);
-            museumByMost = museumService.findByMostArtist(artistID);
+            museumByMost = MuseumDtoConverter.convert(museumService.findByMostArtist(artistID));
         } else{
             throw new IllegalArgumentException("invalid endpoint");
         }

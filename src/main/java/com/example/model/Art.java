@@ -17,7 +17,7 @@ import org.hibernate.annotations.Type;
         generator = ObjectIdGenerators.PropertyGenerator.class,
         property = "id",
         scope = Art.class)
-@JsonTypeInfo( use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.PROPERTY, property = "type")
+//@JsonTypeInfo( use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.PROPERTY, property = "type")
 @JsonSubTypes({
         @JsonSubTypes.Type(value = Painting.class, name = "painting"),
         @JsonSubTypes.Type(value = Sculpture.class, name = "sculpture")

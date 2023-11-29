@@ -1,5 +1,6 @@
 package com.example.controller;
 
+import com.example.dto.MuseumDto;
 import com.example.model.Museum;
 import com.example.model.Painting;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -42,7 +43,7 @@ public class MuseumControllerTests {
         MvcResult result = resultActions.andReturn();
         String contentAsString = result.getResponse().getContentAsString();
 
-        Museum[] museums = mapper.readValue(contentAsString, Museum[].class);
+        MuseumDto[] museums = mapper.readValue(contentAsString, MuseumDto[].class);
 
         assertEquals(expectedLength, museums.length);
 
@@ -61,7 +62,7 @@ public class MuseumControllerTests {
         MvcResult result = resultActions.andReturn();
         String contentAsString = result.getResponse().getContentAsString();
 
-        Museum museum = mapper.readValue(contentAsString, Museum.class);
+        MuseumDto museum = mapper.readValue(contentAsString, MuseumDto.class);
 
         assertEquals(expectedName, museum.getName());
 
@@ -88,7 +89,7 @@ public class MuseumControllerTests {
 
     @Test
     public void testGettingMuseumMostFilterWithId() throws Exception {
-        int testId = 10;
+        Long testId = 10L;
         String expectedName = "Louvre Museum";
 
         ResultActions resultActions = this.mockMvc.perform(MockMvcRequestBuilders.get("/museum/most?artistID="+testId)
@@ -99,7 +100,7 @@ public class MuseumControllerTests {
         MvcResult result = resultActions.andReturn();
         String contentAsString = result.getResponse().getContentAsString();
 
-        Museum museum = mapper.readValue(contentAsString, Museum.class);
+        MuseumDto museum = mapper.readValue(contentAsString, MuseumDto.class);
 
         assertEquals(expectedName, museum.getName());
 
@@ -107,7 +108,7 @@ public class MuseumControllerTests {
 
     @Test
     public void testDeleteOneMuseum() throws Exception {
-        int id = 10;
+        Long id = 10L;
         ResultActions resultActions = this.mockMvc.perform(MockMvcRequestBuilders.delete("/museum/"+id))
                 .andExpect(MockMvcResultMatchers.status().isOk());
     }

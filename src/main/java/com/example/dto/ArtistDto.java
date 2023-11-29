@@ -7,6 +7,7 @@ import jakarta.persistence.CascadeType;
 import jakarta.persistence.OneToMany;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.util.Collections;
 import java.util.List;
@@ -14,6 +15,7 @@ import java.util.List;
 @Data
 @JsonInclude(JsonInclude.Include.NON_DEFAULT)
 @AllArgsConstructor
+@NoArgsConstructor
 public class ArtistDto {
 
     private Long id;

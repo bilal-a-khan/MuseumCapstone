@@ -12,15 +12,19 @@ import jakarta.persistence.Enumerated;
 import jakarta.persistence.ManyToOne;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
 @AllArgsConstructor
 @JsonInclude(JsonInclude.Include.NON_DEFAULT)
+@NoArgsConstructor
 public class ArtDto {
 
     private Long id;
     private String name;
 
+    @JsonIgnore
+    private String type;
     private ArtistDto artist;
 
     @Enumerated(value = EnumType.STRING)
@@ -43,16 +47,6 @@ public class ArtDto {
         this.backStory = backStory;
     }
 
-    public ArtDto(Long id, String name, ArtistDto artist, Medium medium, int yearCompleted, String backStory, Style style) {
-        this.id = id;
-        this.name = name;
-        this.artist = artist;
-        this.medium = medium;
-        this.yearCompleted = yearCompleted;
-        this.backStory = backStory;
-        this.style = style;
-    }
-
     public ArtDto(Long id, String name, ArtistDto artist, Medium medium, MuseumDto museum, int yearCompleted, String backStory) {
         this.id = id;
         this.name = name;
@@ -61,5 +55,16 @@ public class ArtDto {
         this.museum = museum;
         this.yearCompleted = yearCompleted;
         this.backStory = backStory;
+    }
+
+    public ArtDto(Long id, String name, ArtistDto artist, Medium medium, MuseumDto museum, int yearCompleted, String backStory, Style style) {
+        this.id = id;
+        this.name = name;
+        this.artist = artist;
+        this.medium = medium;
+        this.museum = museum;
+        this.yearCompleted = yearCompleted;
+        this.backStory = backStory;
+        this.style = style;
     }
 }

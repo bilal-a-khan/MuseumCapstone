@@ -44,8 +44,8 @@ public class ArtController {
 
         List<ArtDto> dto = new ArrayList<>();
 
-        for (Painting art : artService.findAllPaintings()) {
-            dto.add(ArtDtoConverter.convert(art));
+        for (Painting painting : artService.findAllPaintings()) {
+            dto.add(ArtDtoConverter.convert(painting));
         }
 
         log.debug("Fetching all paintings");
@@ -57,8 +57,8 @@ public class ArtController {
 
         List<ArtDto> dto = new ArrayList<>();
 
-        for (Art art : artService.findAllSculptures()) {
-            dto.add(ArtDtoConverter.convert(art));
+        for (Sculpture sculpture : artService.findAllSculptures()) {
+            dto.add(ArtDtoConverter.convert(sculpture));
         }
 
         log.debug("Find all sculptures called");

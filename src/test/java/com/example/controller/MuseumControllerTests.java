@@ -81,7 +81,7 @@ public class MuseumControllerTests {
         MvcResult result = resultActions.andReturn();
         String contentAsString = result.getResponse().getContentAsString();
 
-        Museum museum = mapper.readValue(contentAsString, Museum.class);
+        MuseumDto museum = mapper.readValue(contentAsString, MuseumDto.class);
 
         assertEquals(expectedName, museum.getName());
 

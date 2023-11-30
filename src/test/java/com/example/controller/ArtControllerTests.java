@@ -1,9 +1,12 @@
 package com.example.controller;
 
+import com.example.dto.ArtDto;
 import com.example.model.Art;
+import com.example.model.Location;
 import com.example.model.Painting;
 import com.example.model.Sculpture;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -18,6 +21,8 @@ import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
+import java.util.List;
+
 import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -30,7 +35,12 @@ public class ArtControllerTests {
 
         @Autowired
         MockMvc mockMvc;
-        ObjectMapper mapper = new ObjectMapper();
+        ObjectMapper mapper;
+
+        @BeforeEach
+    public void setUp(){
+           mapper = new ObjectMapper();
+        }
 
 
     @Test
@@ -45,7 +55,7 @@ public class ArtControllerTests {
         MvcResult result = resultActions.andReturn();
         String contentAsString = result.getResponse().getContentAsString();
 
-        Art[] arts = mapper.readValue(contentAsString, Art[].class);
+        ArtDto[] arts = mapper.readValue(contentAsString, ArtDto[].class);
 
         System.out.println("Expected length: " + expectedLength);
         System.out.println("actual length: " + arts.length);
@@ -67,7 +77,7 @@ public class ArtControllerTests {
             MvcResult result = resultActions.andReturn();
             String contentAsString = result.getResponse().getContentAsString();
 
-            Painting[] paintings = mapper.readValue(contentAsString, Painting[].class);
+            ArtDto[] paintings = mapper.readValue(contentAsString,ArtDto[].class);
 
             System.out.println("Expected length: " + expectedLength);
             System.out.println("actual length: " + paintings.length);
@@ -87,7 +97,7 @@ public class ArtControllerTests {
         MvcResult result = resultActions.andReturn();
         String contentAsString = result.getResponse().getContentAsString();
 
-        Sculpture[] sculptures = mapper.readValue(contentAsString, Sculpture[].class);
+        ArtDto[] sculptures = mapper.readValue(contentAsString, ArtDto[].class);
 
         System.out.println("Expected length: " + expectedLength);
         System.out.println("actual length: " + sculptures.length);
@@ -109,10 +119,10 @@ public class ArtControllerTests {
         MvcResult result = resultActions.andReturn();
         String contentAsString = result.getResponse().getContentAsString();
 
-        Art art = mapper.readValue(contentAsString, Art.class);
+        ArtDto art = mapper.readValue(contentAsString, ArtDto.class);
 
-        System.out.println("Expected length: " + expectedName);
-        System.out.println("actual length: " + art.getName());
+        System.out.println("Expected name: " + expectedName);
+        System.out.println("actual name: " + art.getName());
 
         assertEquals(expectedName, art.getName());
     }
@@ -138,8 +148,8 @@ public class ArtControllerTests {
         String contentAsString = result.getResponse().getContentAsString();
         Painting paintingResult = mapper.readValue(contentAsString, Painting.class);
 
-        System.out.println("Expected length: " + 1);
-        System.out.println("actual length: " + paintingResult.getId());
+        System.out.println("Expected id: " + 1);
+        System.out.println("actual id: " + paintingResult.getId());
 
         assertEquals(1,paintingResult.getId());
     }
@@ -159,8 +169,8 @@ public class ArtControllerTests {
         String contentAsString = result.getResponse().getContentAsString();
         Sculpture sculptureResult = mapper.readValue(contentAsString, Sculpture.class);
 
-        System.out.println("Expected length: " + 1);
-        System.out.println("actual length: " + sculptureResult.getId());
+        System.out.println("Expected id: " + 1);
+        System.out.println("actual id: " + sculptureResult.getId());
 
         assertEquals(1,sculptureResult.getId());
     }
@@ -182,8 +192,8 @@ public class ArtControllerTests {
         String contentAsString = result.getResponse().getContentAsString();
         Painting paintingResult = mapper.readValue(contentAsString, Painting.class);
 
-        System.out.println("Expected length: " + painting.getName());
-        System.out.println("actual length: " + paintingResult.getName());
+        System.out.println("Expected name: " + painting.getName());
+        System.out.println("actual name: " + paintingResult.getName());
 
         assertEquals(painting.getName(),paintingResult.getName());
     }
@@ -205,31 +215,36 @@ public class ArtControllerTests {
         String contentAsString = result.getResponse().getContentAsString();
         Sculpture sculptureResult = mapper.readValue(contentAsString, Sculpture.class);
 
-        System.out.println("Expected length: " + sculpture.getName());
-        System.out.println("actual length: " + sculptureResult.getName());
+        System.out.println("Expected name: " + sculpture.getName());
+        System.out.println("actual name: " + sculptureResult.getName());
 
         assertEquals(sculpture.getName(),sculptureResult.getName());
     }
 
     @Test
-    public void testGetArtWithId() throws Exception {
-        int testId = 11;
-        String expectedName = "Dying Slave";
+    public void testGetLocations() throws Exception{
+        String testName = "Mona Lisa";
+        String testCity = "Paris";
+        int expectedLength = 1;
 
-        ResultActions resultActions = this.mockMvc.perform(MockMvcRequestBuilders.get("/art/"+testId)
+        ResultActions resultActions = this.mockMvc.perform(MockMvcRequestBuilders.get("/location?name="+testName)
                         .contentType(MediaType.APPLICATION_JSON)
                         .accept(MediaType.APPLICATION_JSON))
                 .andExpect(MockMvcResultMatchers.status().isOk());
 
         MvcResult result = resultActions.andReturn();
         String contentAsString = result.getResponse().getContentAsString();
+        Location[] locations = mapper.readValue(contentAsString, Location[].class);
 
-        Art art = mapper.readValue(contentAsString, Art.class);
+        System.out.println("Actual city: " + locations[0].getCity());
+        System.out.println("Expected city: " + testCity);
+        System.out.println(contentAsString);
 
-        System.out.println("Expected length: " + expectedName);
-        System.out.println("actual length: " + art.getName());
+        assertAll(
+                ()-> assertEquals(testCity, locations[0].getCity()),
+                ()-> assertEquals(expectedLength, locations.length)
+        );
 
-        assertEquals(expectedName, art.getName());
     }
 
-        }
+}

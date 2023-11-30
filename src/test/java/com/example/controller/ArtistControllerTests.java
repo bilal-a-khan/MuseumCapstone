@@ -3,6 +3,8 @@ package com.example.controller;
 
 import com.example.dto.ArtDto;
 import com.example.dto.ArtistDto;
+import com.example.model.Artist;
+import com.example.model.Painting;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -99,5 +101,56 @@ public class ArtistControllerTests {
         assertEquals(expectedName, artists[0].getName());
     }
 
+
+    public void testDeleteOneArtist() throws Exception {
+        int id = 10;
+        ResultActions resultActions = this.mockMvc.perform(MockMvcRequestBuilders.delete("/artist/"+id))
+                .andExpect(MockMvcResultMatchers.status().isOk());
+    }
+
+
+    @Test
+    public void testCreateArtist() throws Exception{
+
+        Artist artist = new Artist();
+
+        ResultActions resultActions = this.mockMvc.perform(MockMvcRequestBuilders.post("/artist")
+                        .content(mapper.writeValueAsString(artist))
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .accept(MediaType.APPLICATION_JSON))
+                .andExpect(MockMvcResultMatchers.status().isOk());
+
+        MvcResult result = resultActions.andReturn();
+        String contentAsString = result.getResponse().getContentAsString();
+        Artist artistResult = mapper.readValue(contentAsString, Artist.class);
+
+        System.out.println("Expected id: " + 1);
+        System.out.println("actual id: " + artistResult.getId());
+
+        assertEquals(1,artistResult.getId());
+    }
+
+    @Test
+    public void testUpdateArtist() throws Exception{
+
+        Artist artist = new Artist();
+        artist.setId(10L);
+        artist.setName("Changed artist name");
+
+        ResultActions resultActions = this.mockMvc.perform(MockMvcRequestBuilders.put("/artist")
+                        .content(mapper.writeValueAsString(artist))
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .accept(MediaType.APPLICATION_JSON))
+                .andExpect(MockMvcResultMatchers.status().isOk());
+
+        MvcResult result = resultActions.andReturn();
+        String contentAsString = result.getResponse().getContentAsString();
+        Artist artistResult = mapper.readValue(contentAsString, Artist.class);
+
+        System.out.println("Expected name: " + artist.getName());
+        System.out.println("actual name: " + artistResult.getName());
+
+        assertEquals(artist.getName(),artistResult.getName());
+    }
 
 }

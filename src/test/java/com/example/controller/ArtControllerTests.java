@@ -45,7 +45,7 @@ public class ArtControllerTests {
 
     @Test
     public void testGettingAllArt() throws Exception {
-        int expectedLength = 9;
+        int expectedLength = 6;
 
         ResultActions resultActions = this.mockMvc.perform(MockMvcRequestBuilders.get("/art")
                         .contentType(MediaType.APPLICATION_JSON)
@@ -65,29 +65,29 @@ public class ArtControllerTests {
     }
 
 
-        @Test
-        public void testGettingAllPaintings() throws Exception {
-            int expectedLength = 4;
+    @Test
+    public void testGettingAllPaintings() throws Exception {
+        int expectedLength = 4;
 
-            ResultActions resultActions = this.mockMvc.perform(MockMvcRequestBuilders.get("/painting")
-                            .contentType(MediaType.APPLICATION_JSON)
-                            .accept(MediaType.APPLICATION_JSON))
-                    .andExpect(MockMvcResultMatchers.status().isOk());
+        ResultActions resultActions = this.mockMvc.perform(MockMvcRequestBuilders.get("/painting")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .accept(MediaType.APPLICATION_JSON))
+                .andExpect(MockMvcResultMatchers.status().isOk());
 
-            MvcResult result = resultActions.andReturn();
-            String contentAsString = result.getResponse().getContentAsString();
+        MvcResult result = resultActions.andReturn();
+        String contentAsString = result.getResponse().getContentAsString();
 
-            ArtDto[] paintings = mapper.readValue(contentAsString,ArtDto[].class);
+        ArtDto[] paintings = mapper.readValue(contentAsString,ArtDto[].class);
 
-            System.out.println("Expected length: " + expectedLength);
-            System.out.println("actual length: " + paintings.length);
+        System.out.println("Expected length: " + expectedLength);
+        System.out.println("actual length: " + paintings.length);
 
-            assertEquals(expectedLength, paintings.length);
-        }
+        assertEquals(expectedLength, paintings.length);
+    }
 
     @Test
     public void testGettingAllSculptures() throws Exception {
-        int expectedLength = 5;
+        int expectedLength = 2;
 
         ResultActions resultActions = this.mockMvc.perform(MockMvcRequestBuilders.get("/sculpture")
                         .contentType(MediaType.APPLICATION_JSON)

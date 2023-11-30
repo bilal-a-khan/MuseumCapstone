@@ -106,7 +106,11 @@ public class ArtController {
 
         artList.forEach((art) -> {
             locations.add(art.getMuseum().getLocation());
+
         });
+
+        log.debug("lenght of artList is " + artList.size());
+        log.debug("Length of locations is " + locations.size());
         return locations;
     }
 

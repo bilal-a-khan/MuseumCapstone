@@ -104,10 +104,7 @@ public class ArtController {
         List<Art> artList = artService.searchByName(name);
         List<Location> locations = new ArrayList<>();
 
-        artList.forEach((art) -> {
-            locations.add(art.getMuseum().getLocation());
-
-        });
+        artList.forEach(art -> locations.add(art.getMuseum().getLocation()));
 
         log.debug("lenght of artList is " + artList.size());
         log.debug("Length of locations is " + locations.size());

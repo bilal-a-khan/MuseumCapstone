@@ -67,10 +67,6 @@ public class MuseumController {
             a.setMuseum(null);
         }
 
-//        museum.setArtList(artList);
-//
-//        museumService.save(museum);
-
         museumService.deleteById(id);
         log.debug("Museum object with id = " + id + " has been deleted.");
     }

@@ -1,11 +1,8 @@
 package com.example.dto;
 
-
-import com.example.model.Art;
 import com.example.model.Curator;
 import com.example.model.Location;
 import com.fasterxml.jackson.annotation.JsonInclude;
-import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;

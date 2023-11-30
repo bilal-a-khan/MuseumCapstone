@@ -1,15 +1,11 @@
 package com.example.dto;
 
-import com.example.model.Art;
-import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import com.fasterxml.jackson.annotation.JsonInclude;
-import jakarta.persistence.CascadeType;
-import jakarta.persistence.OneToMany;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.Collections;
 import java.util.List;
 
 @Data

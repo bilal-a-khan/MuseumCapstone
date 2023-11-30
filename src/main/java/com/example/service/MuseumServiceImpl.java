@@ -1,7 +1,6 @@
 package com.example.service;
 
 import com.example.model.*;
-import com.example.repository.ArtRepository;
 import com.example.repository.MuseumRepository;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -45,7 +44,6 @@ public class MuseumServiceImpl implements MuseumService {
             log.debug("style not found. Throwing null pointer exception");
             throw new NullPointerException("Style not found");
         }
-
 
         List<Museum> museums = findAll();
 

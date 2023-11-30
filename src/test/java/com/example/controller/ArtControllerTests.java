@@ -127,6 +127,9 @@ public class ArtControllerTests {
         assertEquals(expectedName, art.getName());
     }
 
+
+
+
     @Test
     public void testDeleteOneArt() throws Exception {
         int id = 10;

@@ -2,7 +2,7 @@ package com.example.model;
 
 
 import jakarta.persistence.*;
-import jdk.jfr.Enabled;
+
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -19,7 +19,7 @@ public class Person {
     private String name;
     private int yearBorn;
 
-    public Person(String name, int dateOfBirth){
+    public Person(String name, int yearBorn){
         this.name = name;
         this.yearBorn = yearBorn;
     }

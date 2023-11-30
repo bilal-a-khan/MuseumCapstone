@@ -55,7 +55,49 @@ public class ArtistControllerTests {
         System.out.println("actual length: " + arts.length);
 
         assertEquals(expectedLength, arts.length);
-
     }
+
+    @Test
+    public void testGettingOneArtist() throws Exception{
+        String expectedName = "Leonardo da Vinci";
+        int id = 10;
+
+        ResultActions resultActions = this.mockMvc.perform(MockMvcRequestBuilders.get("/artist/"+id)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .accept(MediaType.APPLICATION_JSON))
+                .andExpect(MockMvcResultMatchers.status().isOk());
+
+        MvcResult result = resultActions.andReturn();
+        String contentAsString = result.getResponse().getContentAsString();
+
+        ArtistDto artist = mapper.readValue(contentAsString, ArtistDto.class);
+
+        System.out.println("Expected name: " + expectedName);
+        System.out.println("actual name: " + artist.getName());
+
+        assertEquals(expectedName, artist.getName());
+    }
+
+    @Test
+    public void testSearchOneArtist() throws Exception{
+        String expectedName = "Leonardo da Vinci";
+        String searchWord = "Leo";
+
+        ResultActions resultActions = this.mockMvc.perform(MockMvcRequestBuilders.get("/artist/search?name="+ searchWord)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .accept(MediaType.APPLICATION_JSON))
+                .andExpect(MockMvcResultMatchers.status().isOk());
+
+        MvcResult result = resultActions.andReturn();
+        String contentAsString = result.getResponse().getContentAsString();
+
+        ArtistDto[] artists = mapper.readValue(contentAsString, ArtistDto[].class);
+
+        System.out.println("Expected name: " + expectedName);
+        System.out.println("actual name: " + artists[0].getName());
+
+        assertEquals(expectedName, artists[0].getName());
+    }
+
 
 }

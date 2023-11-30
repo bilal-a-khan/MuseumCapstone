@@ -1,15 +1,12 @@
 package com.example.dto;
 
-import com.example.model.Artist;
+
 import com.example.model.Medium;
-import com.example.model.Museum;
 import com.example.model.Style;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
-import jakarta.annotation.Nullable;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
-import jakarta.persistence.ManyToOne;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;

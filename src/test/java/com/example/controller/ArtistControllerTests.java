@@ -101,7 +101,29 @@ public class ArtistControllerTests {
         assertEquals(expectedName, artists[0].getName());
     }
 
+    @Test
+    public void testSortedListArtists() throws Exception{
 
+        String expectedName = "Vincent van Gogh";
+
+        ResultActions resultActions = this.mockMvc.perform(MockMvcRequestBuilders.get("/sortedartists")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .accept(MediaType.APPLICATION_JSON))
+                .andExpect(MockMvcResultMatchers.status().isOk());
+
+        MvcResult result = resultActions.andReturn();
+        String contentAsString = result.getResponse().getContentAsString();
+
+        ArtistDto[] artists = mapper.readValue(contentAsString, ArtistDto[].class);
+
+        System.out.println("Expected name: " + expectedName);
+        System.out.println("actual name: " + artists[0].getName());
+
+        assertEquals(expectedName, artists[0].getName());
+    }
+
+
+    @Test
     public void testDeleteOneArtist() throws Exception {
         int id = 10;
         ResultActions resultActions = this.mockMvc.perform(MockMvcRequestBuilders.delete("/artist/"+id))

@@ -2,10 +2,9 @@ package com.example.utils;
 
 import com.example.dto.ArtDto;
 import com.example.dto.ArtistDto;
-import com.example.model.Art;
+
 import com.example.model.Artist;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class ArtistDtoConverter {

@@ -1,11 +1,10 @@
 package com.example.service;
 
 import com.example.model.Art;
-import com.example.model.Artist;
+
 import com.example.model.Painting;
 import com.example.model.Sculpture;
 
-import java.awt.*;
 import java.util.List;
 
 public interface ArtService {

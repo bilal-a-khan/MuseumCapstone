@@ -25,11 +25,5 @@ public class ArtDtoConverter {
                 painting.getYearCompleted(), painting.getBackStory(),painting.getStyle());
     }
 
-//    public static ArtDto convertWithoutMuseum(Painting painting) {
-//        return new ArtDto(painting.getId(), painting.getName(), ArtistDtoConverter.convert(painting.getArtist()),
-//                painting.getMedium(),
-//                painting.getYearCompleted(), painting.getBackStory(),painting.getStyle());
-//    }
-
 
 }

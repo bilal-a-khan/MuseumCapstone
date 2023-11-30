@@ -10,10 +10,7 @@ import java.util.List;
 
 public class ArtistDtoConverter {
 
-//    public static ArtistDto convert(Artist artist){
-//        return new ArtistDto(artist.getId(), artist.getName(),
-//                artist.getYearBorn(), artist.getYearDead());
-//    }
+
     public static ArtistDto convert(Artist artist, List<ArtDto> dtos){
         return new ArtistDto(artist.getId(), artist.getName(),
                 artist.getYearBorn(), artist.getYearDead(), dtos);
@@ -24,13 +21,4 @@ public class ArtistDtoConverter {
     }
 
 
-//    public static ArtistDto convertWithArtList(Artist artist){
-//
-//        List<ArtDto> dtos = new ArrayList<>();
-//        for(Art art : artist.getArtList())
-//            dtos.add(ArtDtoConverter.convert(art));
-//
-//        return new ArtistDto(artist.getId(), artist.getName(),
-//                artist.getYearBorn(), artist.getYearDead(), dtos);
-//    }
 }

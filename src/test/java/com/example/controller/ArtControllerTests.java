@@ -105,6 +105,59 @@ public class ArtControllerTests {
         assertEquals(expectedLength, sculptures.length);
     }
 
+    @Test
+    public void testFirstSculptureByArtist() throws Exception{
+        String expectedName = "David";
+        int id = 11;
+
+        ResultActions resultActions = this.mockMvc.perform(MockMvcRequestBuilders.get("/sculpture/first/" + id)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .accept(MediaType.APPLICATION_JSON))
+                        .andExpect(MockMvcResultMatchers.status().isOk());
+
+        MvcResult result = resultActions.andReturn();
+        String contentAsString = result.getResponse().getContentAsString();
+
+        ArtDto sculpture = mapper.readValue(contentAsString, ArtDto.class);
+
+        assertEquals(expectedName, sculpture.getName());
+    }
+
+    @Test
+    public void testLastSculptureByArtist() throws Exception{
+        String expectedName = "Dying Slave";
+        int id = 11;
+
+        ResultActions resultActions = this.mockMvc.perform(MockMvcRequestBuilders.get("/sculpture/last/" + id)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .accept(MediaType.APPLICATION_JSON))
+                .andExpect(MockMvcResultMatchers.status().isOk());
+
+        MvcResult result = resultActions.andReturn();
+        String contentAsString = result.getResponse().getContentAsString();
+
+        ArtDto sculpture = mapper.readValue(contentAsString, ArtDto.class);
+
+        assertEquals(expectedName, sculpture.getName());
+    }
+
+    @Test
+    public void testSculptureByMuseumAndArtist() throws Exception{
+        String expectedName = "David";
+
+        ResultActions resultActions = this.mockMvc.perform(MockMvcRequestBuilders.get("/sculpture/11/11")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .accept(MediaType.APPLICATION_JSON))
+                .andExpect(MockMvcResultMatchers.status().isOk());
+
+        MvcResult result = resultActions.andReturn();
+        String contentAsString = result.getResponse().getContentAsString();
+
+        ArtDto[] sculpture = mapper.readValue(contentAsString, ArtDto[].class);
+
+        assertEquals(expectedName, sculpture[0].getName());
+    }
+
 
     @Test
     public void testGettingOneArt() throws Exception {
